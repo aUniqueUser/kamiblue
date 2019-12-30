@@ -36,6 +36,11 @@ public abstract class MixinGuiChat {
         if (inputField.getText().startsWith(Command.getCommandPrefix())) {
             Wrapper.getMinecraft().displayGuiScreen(new KamiGuiChat(inputField.getText(), historyBuffer, sentHistoryCursor));
         }
+        if (inputField.getText().startsWith("resetkamiprefix")) {
+            Command.commandPrefix.setValue(".");
+            inputField.setText("");
+            Command.sendChatMessage("Prefix set to \".\".");
+        }
     }
 
 }
