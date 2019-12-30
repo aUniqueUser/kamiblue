@@ -2,11 +2,15 @@ package me.zeroeightsix.kami.command;
 
 import me.zeroeightsix.kami.KamiMod;
 import me.zeroeightsix.kami.command.syntax.SyntaxChunk;
+import me.zeroeightsix.kami.module.ModuleManager;
+import me.zeroeightsix.kami.module.modules.bewwawho.misc.NoKamiChat;
 import me.zeroeightsix.kami.setting.Setting;
 import me.zeroeightsix.kami.setting.Settings;
 import me.zeroeightsix.kami.util.zeroeightysix.Wrapper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.launchwrapper.LogWrapper;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentBase;
 
@@ -33,15 +37,27 @@ public abstract class Command {
     }
 
     public static void sendChatMessage(String message) {
-        sendRawChatMessage("&7[&a" + KamiMod.KAMI_KANJI + "&7] &r" + message);
+        if (ModuleManager.getModuleByName("NoKamiChat").isDisabled()) {
+            sendRawChatMessage("&7[&a" + KamiMod.KAMI_KANJI + "&7] &r" + message);
+        } else if (ModuleManager.getModuleByName("NoKamiChat").isEnabled() && NoKamiChat.playSound.getValue()) {
+            Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player, Minecraft.getMinecraft().player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, SoundCategory.MASTER, 0.5f, 1.2f);
+        }
     }
 
     public static void sendErrorMessage(String message) {
-        sendRawChatMessage("&7[&4" + KamiMod.KAMI_KANJI + "&7] &r" + message);
+        if (ModuleManager.getModuleByName("NoKamiChat").isDisabled()) {
+            sendRawChatMessage("&7[&4" + KamiMod.KAMI_KANJI + "&7] &r" + message);
+        } else if (ModuleManager.getModuleByName("NoKamiChat").isEnabled() && NoKamiChat.playSound.getValue()) {
+            Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player, Minecraft.getMinecraft().player.getPosition(), SoundEvents.ENTITY_PLAYER_HURT, SoundCategory.MASTER, 0.6f, 0.1f);
+        }
     }
 
     public static void sendWarningMessage(String message) {
-        sendRawChatMessage("&7[&6" + KamiMod.KAMI_KANJI + "&7] &r" + message);
+        if (ModuleManager.getModuleByName("NoKamiChat").isDisabled()) {
+            sendRawChatMessage("&7[&6" + KamiMod.KAMI_KANJI + "&7] &r" + message);
+        } else if (ModuleManager.getModuleByName("NoKamiChat").isEnabled() && NoKamiChat.playSound.getValue()) {
+            Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player, Minecraft.getMinecraft().player.getPosition(), SoundEvents.BLOCK_NOTE_SNARE, SoundCategory.MASTER, 1f, 0.5f);
+        }
     }
 
     public static void sendStringChatMessage(String[] messages) {
