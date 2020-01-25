@@ -71,6 +71,11 @@ public class KamiGuiChat extends GuiChat {
             if ((c.getLabel().startsWith(args[0]) && !line.endsWith(" ")) || c.getLabel().equals(args[0])) {
                 options.put(c.getLabel(), c);
             }
+            for (String alias : c.getAliases()) {
+                if ((c.getLabel().startsWith(args[0]) && !line.endsWith(" ")) || alias.equals(args[0])) {
+                    options.put(alias, c);
+                }
+            }
         }
 
         if (options.isEmpty()) {
