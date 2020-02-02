@@ -68,13 +68,14 @@ public class KamiGuiChat extends GuiChat {
         if (args.length == 0) return; // Hell naw!
 
         for (Command c : KamiMod.getInstance().getCommandManager().getCommands()) {
-            if ((c.getLabel().startsWith(args[0]) && !line.endsWith(" ")) || c.getLabel().equals(args[0])) {
-                options.put(c.getLabel(), c);
-            }
-            for (String alias : c.getAliases()) {
-                if ((c.getLabel().startsWith(args[0]) && !line.endsWith(" ")) || alias.equals(args[0])) {
-                    options.put(alias, c);
+            if (!c.getAliases().isEmpty()) {
+                for (String alias : c.getAliases()) {
+                    if ((c.getLabel().startsWith(args[0]) && !line.endsWith(" ")) || alias.equals(args[0])) {
+                        options.put(alias, c);
+                    }
                 }
+            } else if ((c.getLabel().startsWith(args[0]) && !line.endsWith(" ")) || c.getLabel().equals(args[0])) {
+                options.put(c.getLabel(), c);
             }
         }
 
